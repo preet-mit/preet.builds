@@ -1,52 +1,46 @@
 /* ==========================================
-   EIGENPRIZE PORTFOLIO — Scripts
-   Scroll animations & nav behavior
+   PREET.BUILDS — Scripts
+   Scroll reveals, nav behavior, parallax
    ========================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
 
     // ---------- Scroll-triggered animations ----------
-    const animatedElements = document.querySelectorAll(
-        '.story-block, .build-header, .impact-card, .about-content'
+    const revealElements = document.querySelectorAll(
+        '.story-block, .build-header, .impact-card, .about-content, .dna-card, .image-card'
     );
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                // Stagger animation for grid items
-                const delay = entry.target.classList.contains('impact-card')
-                    ? index * 100
-                    : 0;
-                setTimeout(() => {
-                    entry.target.classList.add('visible');
-                }, delay);
-                observer.unobserve(entry.target);
+                entry.target.classList.add('visible');
+                revealObserver.unobserve(entry.target);
             }
         });
     }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.08,
+        rootMargin: '0px 0px -40px 0px'
     });
 
-    animatedElements.forEach(el => observer.observe(el));
+    revealElements.forEach(el => revealObserver.observe(el));
 
 
-    // ---------- Nav background on scroll ----------
+    // ---------- Nav scroll behavior ----------
     const nav = document.getElementById('nav');
-    let lastScroll = 0;
+    let ticking = false;
 
     window.addEventListener('scroll', () => {
-        const currentScroll = window.scrollY;
-
-        if (currentScroll > 100) {
-            nav.style.borderBottomColor = 'rgba(255, 255, 255, 0.08)';
-            nav.style.background = 'rgba(10, 10, 15, 0.95)';
-        } else {
-            nav.style.borderBottomColor = 'rgba(255, 255, 255, 0.06)';
-            nav.style.background = 'rgba(10, 10, 15, 0.85)';
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                if (window.scrollY > 80) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+                ticking = false;
+            });
+            ticking = true;
         }
-
-        lastScroll = currentScroll;
     }, { passive: true });
 
 
@@ -59,15 +53,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (entry.isIntersecting) {
                 const id = entry.target.id;
                 navLinks.forEach(link => {
-                    link.style.color = '';
+                    link.classList.remove('active');
                     if (link.getAttribute('href') === `#${id}`) {
-                        link.style.color = 'var(--accent-light)';
+                        link.classList.add('active');
                     }
                 });
             }
         });
     }, {
-        threshold: 0.2,
+        threshold: 0.15,
         rootMargin: '-80px 0px -50% 0px'
     });
 
@@ -84,5 +78,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+
+    // ---------- Parallax hero image ----------
+    const heroImage = document.querySelector('.hero-image');
+    if (heroImage) {
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    const scroll = window.scrollY;
+                    if (scroll < window.innerHeight) {
+                        heroImage.style.transform = `scale(1.05) translateY(${scroll * 0.15}px)`;
+                        heroImage.style.opacity = Math.max(0.02, 0.08 - scroll * 0.0001);
+                    }
+                });
+            }
+        }, { passive: true });
+    }
 
 });
