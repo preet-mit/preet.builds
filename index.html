@@ -597,14 +597,194 @@
     </section>
 
     <!-- ============ BUILD 3: PORTABLE NMR & HALBACH ARRAY ============ -->
-    <section class="build-section build-placeholder" id="build-3">
+    <section class="build-section" id="build-3">
         <div class="build-header">
             <div class="build-number">BUILD 03</div>
-            <h2 class="build-title">Portable MRI &amp; Halbach Array</h2>
-            <p class="build-tagline">Point-of-care NMR/MRI for real-time kidney disease monitoring using custom 32-stick Halbach magnet assemblies.</p>
+            <h2 class="build-title">Portable NMR: Bedside Fluid Monitoring</h2>
+            <p class="build-tagline">Building portable MR hardware — from a published Nature Communications sensor deployed at Massachusetts General Hospital, to an entirely new Halbach bore magnet designed for 10&times; the signal.</p>
         </div>
-        <div class="coming-soon">
-            <p>Content coming soon — portable NMR technology deployed at Massachusetts General Hospital.</p>
+
+        <!-- THE PROBLEM -->
+        <div class="story-block story-question">
+            <div class="story-content">
+                <div class="story-label">The Problem</div>
+                <p class="story-text">
+                    500,000+ dialysis patients in the US have <strong>no way to accurately measure how much fluid is in their body</strong>. Clinicians guess &mdash; and when they guess wrong, patients end up in the ER with heart failure (too much fluid) or crash during dialysis (too little). The gold standard requires threading a catheter into the heart. There is no non-invasive, quantitative bedside measurement.
+                </p>
+            </div>
+        </div>
+
+        <!-- DEVICE V1: THE PUBLISHED SENSOR -->
+        <div class="story-block story-build">
+            <div class="story-label">Device V1: Single-Sided MR Sensor <span style="font-size: 0.8em; color: var(--accent-primary);">&mdash; Published in Nature Communications (2024)</span></div>
+            <div class="story-content">
+                <p class="story-text">
+                    We built a <strong>portable 11 kg single-sided MR sensor</strong> &mdash; a slab of 448 N52 permanent magnets that projects a 0.2 T magnetic field into the calf muscle. Using T&sub2; relaxometry, we extract a biomarker called <strong>R&sub2;,&sub2;</strong> that quantifies the ratio of intracellular to extracellular water in skeletal muscle. We showed that R&sub2;,&sub2; drops during dialysis as fluid is removed, correlates with the volume removed (R&sup2; = 0.85), and distinguishes overloaded patients from healthy controls.
+                </p>
+                <p class="story-text">
+                    I updated the RF electronics and grounding for clinical robustness and led deployments at <strong>Massachusetts General Hospital</strong> with nephrologist Dr. Sagar Nigwekar for validation in dialysis patients &mdash; the <strong>first and only clinically validated portable MR diagnostic measurement.</strong>
+                </p>
+            </div>
+            <div class="image-grid grid-2 full-height-images">
+                <div class="image-card">
+                    <img src="images/build3-device-v1.png" alt="Device V1: Simulated magnetic field profile and constructed single-sided magnet array with RF coil" class="card-image" loading="lazy" style="object-fit: contain; max-height: 500px;">
+                    <div class="image-caption">Device V1: COMSOL simulation of the unilateral Halbach magnet array (a,b) and the constructed sensor with RF coil and Delrin casing (c,d). Published in Nature Communications.</div>
+                </div>
+                <div class="image-card">
+                    <img src="images/build3-calf-on-device.png" alt="Patient calf positioned on the portable NMR sensor during clinical measurement" class="card-image" loading="lazy" style="object-fit: contain; max-height: 500px;">
+                    <div class="image-caption">Clinical deployment: a patient's calf resting on the single-sided MR sensor during a T&#8322; relaxometry measurement at the hospital.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WHY A NEW DEVICE -->
+        <div class="story-block story-question">
+            <div class="story-content">
+                <div class="story-label">Why Build a New Device?</div>
+                <p class="story-text">
+                    The current sensor has three critical limitations:
+                </p>
+                <div class="challenge-cards" style="margin-top: 1.5rem;">
+                    <div class="challenge-card">
+                        <div class="challenge-number">01</div>
+                        <div class="challenge-content">
+                            <strong>SNR collapses in the clinic.</strong> The single-sided geometry has no self-shielding. Hospital EMI from infusion pumps and telemetry crushes the signal &mdash; SNR drops from &gt;150 in the lab to as low as 20 in the clinic.
+                        </div>
+                    </div>
+                    <div class="challenge-card">
+                        <div class="challenge-number">02</div>
+                        <div class="challenge-content">
+                            <strong>Tiny sweet spot.</strong> The single-sided design concentrates field in a 200 mm&sup3; sliver at 8 mm depth. This limits signal averaging and forces 11-minute acquisitions.
+                        </div>
+                    </div>
+                    <div class="challenge-card">
+                        <div class="challenge-number">03</div>
+                        <div class="challenge-content">
+                            <strong>Can&rsquo;t measure the forearm.</strong> To prove R&sub2;,&sub2; is a <em>systemic</em> biomarker (not gravity-dependent pooling in the legs), we need a second measurement site. The flat sensor can&rsquo;t wrap around a forearm.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DEVICE V2: THE HALBACH BORE -->
+        <div class="story-block story-build">
+            <div class="story-label">Device V2: What I&rsquo;m Building &mdash; Cylindrical Halbach Bore Magnet</div>
+            <div class="story-content">
+                <p class="story-text">
+                    I&rsquo;m designing and building an entirely new <strong>cylindrical Halbach bore magnet</strong> &mdash; a ring of 320 N52 permanent magnets arranged in a k=2 pattern so the patient slides their forearm into the center. The Halbach geometry concentrates the field <em>inside</em> the bore while canceling it outside, providing partial self-shielding against hospital EMI.
+                </p>
+                <div style="overflow-x: auto; margin: 2rem 0;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--accent-primary);">
+                                <th style="text-align: left; padding: 0.75rem; color: var(--text-secondary);"></th>
+                                <th style="text-align: center; padding: 0.75rem; color: var(--text-secondary);">Current Device (V1)</th>
+                                <th style="text-align: center; padding: 0.75rem; color: var(--accent-primary); font-weight: 700;">New Device (V2)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 0.75rem; color: var(--text-secondary);">Geometry</td>
+                                <td style="text-align: center; padding: 0.75rem;">Single-sided (flat slab)</td>
+                                <td style="text-align: center; padding: 0.75rem; color: var(--accent-primary);">Cylindrical bore (ring)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 0.75rem; color: var(--text-secondary);">Target Anatomy</td>
+                                <td style="text-align: center; padding: 0.75rem;">Calf muscle</td>
+                                <td style="text-align: center; padding: 0.75rem; color: var(--accent-primary);">Forearm muscle</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 0.75rem; color: var(--text-secondary);">Sensitive Volume</td>
+                                <td style="text-align: center; padding: 0.75rem;">200 mm&sup3;</td>
+                                <td style="text-align: center; padding: 0.75rem; color: var(--accent-primary); font-weight: 700;">60,000 mm&sup3; (300&times;)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 0.75rem; color: var(--text-secondary);">SNR Gain</td>
+                                <td style="text-align: center; padding: 0.75rem;">1&times;</td>
+                                <td style="text-align: center; padding: 0.75rem; color: var(--accent-primary); font-weight: 700;">&ge;10&times;</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 0.75rem; color: var(--text-secondary);">Weight</td>
+                                <td style="text-align: center; padding: 0.75rem;">11 kg</td>
+                                <td style="text-align: center; padding: 0.75rem; color: var(--accent-primary);">~5 kg</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.75rem; color: var(--text-secondary);">Acquisition Time</td>
+                                <td style="text-align: center; padding: 0.75rem;">11 min</td>
+                                <td style="text-align: center; padding: 0.75rem; color: var(--accent-primary); font-weight: 700;">&le;3 min</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Simulations -->
+            <div class="image-grid grid-1 full-height-images">
+                <div class="image-card">
+                    <img src="images/build3-halbach-simulation.png" alt="Full COMSOL simulation of Halbach bore magnet showing cross-section with forearm anatomy, field homogeneity, and radial profiles" class="card-image" loading="lazy" style="object-fit: contain; max-height: 700px;">
+                    <div class="image-caption">My COMSOL simulation suite for the 32-stick Halbach bore: cross-section with forearm anatomy overlay, field homogeneity map (&plusmn;4 mT), B&#8320; field direction vectors, axial slice, radial profile through tissue layers, and field along the bore axis. B&#8320; = 193.5 mT, SNR gain &asymp; 24&times; vs. single-sided.</div>
+                </div>
+            </div>
+            <div class="image-grid grid-2 full-height-images" style="margin-top: 2rem;">
+                <div class="image-card">
+                    <img src="images/build3-bore-axial-slice.png" alt="Axial cross-section of bore magnet showing field strength in muscle tissue at Z=0" class="card-image" loading="lazy" style="object-fit: contain; max-height: 600px;">
+                    <div class="image-caption">Axial cross-section (Z=0): the green voxels at 199 mT sit precisely within the muscle annulus between the inner and outer bounds &mdash; the target measurement region.</div>
+                </div>
+                <div class="image-card">
+                    <img src="images/build3-bore-2d-slice.png" alt="2D cross-section showing voxel distribution along the bore axis within muscle tissue" class="card-image" loading="lazy" style="object-fit: contain; max-height: 600px;">
+                    <div class="image-caption">Physical cross-section (Y=0) confirming no spatial overlap between 190 mT and 199 mT voxel populations &mdash; critical for clean slice selection in T&#8322; relaxometry.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BUILDING IT -->
+        <div class="story-block story-build">
+            <div class="story-label">Building It: From Simulation to Hardware</div>
+            <div class="story-content">
+                <p class="story-text">
+                    The bore magnet uses 32 sticks of &frac12;-inch N52 neodymium cubes (10 cubes per stick) arranged in a Halbach k=2 pattern &mdash; each stick&rsquo;s magnetization is rotated by twice its angular position, concentrating the field inside the bore while canceling it outside. I 3D-printed the housing, sorted magnets by flux homogeneity, and am assembling the array by hand.
+                </p>
+            </div>
+            <div class="image-grid grid-1 full-height-images">
+                <div class="image-card">
+                    <img src="images/build3-n52-magnets-sorted.jpg" alt="Sorted N52 neodymium magnets laid out for the Halbach bore assembly" class="card-image" loading="lazy" style="object-fit: contain; max-height: 700px;">
+                    <div class="image-caption">Freshly sorted N52 neodymium magnets for the circular Halbach assembly. Each magnet is individually flux-tested and selected for homogeneity before inclusion.</div>
+                </div>
+            </div>
+            <div class="image-grid grid-3 full-height-images" style="margin-top: 2rem;">
+                <div class="image-card">
+                    <img src="images/build3-boremagnet_3d_printed_assembling_1.jpg" alt="3D printed bore magnet housing during assembly" class="card-image" loading="lazy" style="object-fit: contain; max-height: 500px;">
+                    <div class="image-caption">3D-printed bore magnet housing &mdash; beginning assembly of N52 magnet sticks.</div>
+                </div>
+                <div class="image-card">
+                    <img src="images/build3-boremagnet_3d_printed_assembling_2.jpg" alt="Inserting magnet sticks into the Halbach bore housing" class="card-image" loading="lazy" style="object-fit: contain; max-height: 500px;">
+                    <div class="image-caption">Inserting magnet sticks into the precision-angled slots of the Halbach bore housing.</div>
+                </div>
+                <div class="image-card">
+                    <img src="images/build3-boremagnet_3d_printed_assembling_3.jpg" alt="Further assembly progress on the Halbach bore magnet" class="card-image" loading="lazy" style="object-fit: contain; max-height: 500px;">
+                    <div class="image-caption">Assembly in progress &mdash; each stick must be inserted against extreme magnetic repulsion forces.</div>
+                </div>
+            </div>
+            <div class="image-grid grid-1 full-height-images" style="margin-top: 2rem;">
+                <div class="image-card">
+                    <img src="images/build3-field-measurement-robot.jpg" alt="Robotic arm with gauss meter probe for precise magnetic field mapping of the permanent magnet assemblies" class="card-image" loading="lazy" style="object-fit: contain; max-height: 700px;">
+                    <div class="image-caption">Magnetic field measurement: a gauss meter probe mounted on a robotic arm for sub-millimeter precision 3D field mapping of the permanent magnet assemblies.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- IMPACT -->
+        <div class="story-block story-impact">
+            <div class="story-label">Impact: Toward Absolute Fluid Volume Status</div>
+            <div class="story-content">
+                <p class="story-text">
+                    With the new bore device measuring the forearm and the existing sensor measuring the calf, we can test the critical hypothesis: <strong>does R&sub2;,&sub2; change proportionally at both sites during dialysis?</strong> If yes, R&sub2;,&sub2; is validated as an absolute systemic biomarker of total body fluid volume &mdash; meaning a single bedside measurement can tell clinicians exactly how fluid-overloaded a patient is, without catheters, without guessing.
+                </p>
+                <p class="story-text">
+                    The 10&times; SNR improvement also unlocks faster acquisitions, higher precision, and the robustness needed for deployment in any clinical environment &mdash; the first step toward a <strong>home monitoring device for dialysis patients.</strong>
+                </p>
+            </div>
         </div>
     </section>
 
